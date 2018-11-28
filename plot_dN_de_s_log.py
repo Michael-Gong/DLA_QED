@@ -46,17 +46,17 @@ def pxpy_to_energy(gamma, weight):
 
 
 if __name__ == "__main__":
-  part_number = 20000
+  part_number = 12000
   nsteps      = 101 #sum(1 for line in open(from_path+'x_0000.txt'))/part_number
 
 
   from_path = './Data_no/'
   to_path   = './Data_no/'
-  t0  = np.loadtxt(from_path+'t_tot.txt')/2/np.pi
+  t0  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   #x0  = np.loadtxt(from_path+'x_tot.txt')/2/np.pi
   #y0  = np.loadtxt(from_path+'y_tot.txt')/2/np.pi
-  px0 = np.loadtxt(from_path+'px_tot.txt')/2/np.pi
-  py0 = np.loadtxt(from_path+'py_tot.txt')/2/np.pi
+  px0 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
+  py0 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
   t0  = np.reshape(t0,(part_number,nsteps))
   #x0  = np.reshape(x0,(part_number,nsteps))
   #y0  = np.reshape(y0,(part_number,nsteps))
@@ -68,11 +68,11 @@ if __name__ == "__main__":
 
   from_path = './Data_rr/'
   to_path   = './Data_rr/'
-  t1  = np.loadtxt(from_path+'t_tot.txt')/2/np.pi
+  t1  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   #x1  = np.loadtxt(from_path+'x_tot.txt')/2/np.pi
   #y1  = np.loadtxt(from_path+'y_tot.txt')/2/np.pi
-  px1 = np.loadtxt(from_path+'px_tot.txt')/2/np.pi
-  py1 = np.loadtxt(from_path+'py_tot.txt')/2/np.pi
+  px1 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
+  py1 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
   t1  = np.reshape(t1,(part_number,nsteps))
   #x1  = np.reshape(x1,(part_number,nsteps))
   #y1  = np.reshape(y1,(part_number,nsteps))
@@ -83,12 +83,12 @@ if __name__ == "__main__":
 
 
   from_path = './Data_qe/'
-  to_path   = './jpg_linear/'
-  t2  = np.loadtxt(from_path+'t_tot.txt')/2/np.pi
+  to_path   = './jpg_log/'
+  t2  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   #x2  = np.loadtxt(from_path+'x_tot.txt')/2/np.pi
   #y2  = np.loadtxt(from_path+'y_tot.txt')/2/np.pi
-  px2 = np.loadtxt(from_path+'px_tot.txt')/2/np.pi
-  py2 = np.loadtxt(from_path+'py_tot.txt')/2/np.pi
+  px2 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
+  py2 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
   t2  = np.reshape(t2,(part_number,nsteps))
   #x2  = np.reshape(x1,(part_number,nsteps))
   #y2  = np.reshape(y1,(part_number,nsteps))
@@ -110,14 +110,14 @@ if __name__ == "__main__":
           plt.xlabel('$\gamma$',fontdict=font)
           plt.ylabel('dN/dE [A.U.]',fontdict=font)
           plt.xticks(fontsize=20); plt.yticks(fontsize=20);
-          #plt.yscale('log')
+          plt.yscale('log')
           plt.xlim(0,4000)
           plt.legend(loc='best',fontsize=20,framealpha=0.5)
           #plt.text(250,6e9,'t='+str(round(time/1.0e-15,0))+' fs',fontdict=font)
           plt.title('t='+str(round(t1[0,i],0))+' $T_0$',fontdict=font)
           fig = plt.gcf()
           fig.set_size_inches(10, 7.)
-          fig.savefig(to_path+'dN_dE_comb'+str(i).zfill(4)+'.png',format='png',dpi=80)
+          fig.savefig(to_path+'dN_dE_comb_s_'+str(i).zfill(4)+'.png',format='png',dpi=80)
           plt.close("all")
           print('plotting '+str(i).zfill(4))
           
