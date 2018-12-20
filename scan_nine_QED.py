@@ -40,68 +40,62 @@ def momentum_to_theta(arg_x, arg_y):
 
 
 
-to_path = './a200_bp_1/'
+from_path = './Data_plane_qe/'
+to_path = from_path
 
-part_number=1
+part_number=50
 
 
-grid_b0 = np.linspace(0,40000,11)
-grid_p0 = np.linspace(0,400,11)
-
-for nb0 in grid_b0:
-    for np0 in grid_p0:
+if 1>0:
+    for index in range(part_number):
         #nb0 = 20000.0
         #np0 = 150.0
         
-        insert1='./QEDb'+str(int(round(nb0)))+'p'+str(int(round(np0)))+'/'
+        insert1=from_path #'./QEDb'+str(int(round(nb0)))+'p'+str(int(round(np0)))+'/'
         #insert1='./Data/'
         print(insert1)
-        nsteps = sum(1 for line in open(insert1+'x_0.txt'))
+        nsteps = int(sum(1 for line in open(insert1+'x_0000.txt'))/part_number)
         
-        insert_n='_0'
-        t1=np.loadtxt(insert1+'t'+insert_n+'.txt')
-        z1=np.loadtxt(insert1+'z'+insert_n+'.txt')
-        y1=np.loadtxt(insert1+'y'+insert_n+'.txt')
-        x1=np.loadtxt(insert1+'x'+insert_n+'.txt')
-        px1=np.loadtxt(insert1+'px'+insert_n+'.txt')
-        py1=np.loadtxt(insert1+'py'+insert_n+'.txt')
-        pz1=np.loadtxt(insert1+'pz'+insert_n+'.txt')
+        insert_n='_0000'
+        t=np.loadtxt(insert1+'t'+insert_n+'.txt')
+        y=np.loadtxt(insert1+'y'+insert_n+'.txt')
+        x=np.loadtxt(insert1+'x'+insert_n+'.txt')
+        px=np.loadtxt(insert1+'px'+insert_n+'.txt')
+        py=np.loadtxt(insert1+'py'+insert_n+'.txt')
         #ey=np.loadtxt(insert+'e_part'+'.txt')
         #bz=np.loadtxt(insert+'b_part'+'.txt')
         #ay=np.loadtxt(insert+'a_part'+'.txt')
-        radn1=np.loadtxt(insert1+'radn'+insert_n+'.txt')
-        radt1=np.loadtxt(insert1+'radt'+insert_n+'.txt')
-        radpx1=np.loadtxt(insert1+'rad_px'+insert_n+'.txt')
-        opt1=np.loadtxt(insert1+'opt'+insert_n+'.txt')
-        eta1=np.loadtxt(insert1+'eta'+insert_n+'.txt')
+        radn=np.loadtxt(insert1+'radn'+insert_n+'.txt')
+        radt=np.loadtxt(insert1+'radt'+insert_n+'.txt')
+        radpx=np.loadtxt(insert1+'rad_px'+insert_n+'.txt')
+        radpy=np.loadtxt(insert1+'rad_py'+insert_n+'.txt')
+        eta=np.loadtxt(insert1+'eta'+insert_n+'.txt')
         
-        t=np.reshape(t1,(part_number,nsteps))
-        x=np.reshape(x1,(part_number,nsteps))
-        y=np.reshape(y1,(part_number,nsteps))
-        z=np.reshape(z1,(part_number,nsteps))
-        px=np.reshape(px1,(part_number,nsteps))
-        py=np.reshape(py1,(part_number,nsteps))
-        pz=np.reshape(pz1,(part_number,nsteps))
+        t=np.reshape(t,(part_number,nsteps))
+        x=np.reshape(x,(part_number,nsteps))
+        y=np.reshape(y,(part_number,nsteps))
+        px=np.reshape(px,(part_number,nsteps))
+        py=np.reshape(py,(part_number,nsteps))
         #ey=np.reshape(ey,(part_number,nsteps))
         #ay=np.reshape(ay,(part_number,nsteps))
-        radn=np.reshape(radn1,(part_number,nsteps))
-        radt=np.reshape(radt1,(part_number,nsteps))
-        radpx=np.reshape(radpx1,(part_number,nsteps))
-        opt=np.reshape(opt1,(part_number,nsteps))
-        eta=np.reshape(eta1,(part_number,nsteps))
+        radn=np.reshape(radn,(part_number,nsteps))
+        radt=np.reshape(radt,(part_number,nsteps))
+        radpx=np.reshape(radpx,(part_number,nsteps))
+        radpy=np.reshape(radpy,(part_number,nsteps))
+        eta=np.reshape(eta,(part_number,nsteps))
         
         gamma=np.sqrt(px**2+py**2+1)
         
         R_dep=gamma-px
         
-        py_0 = 1.00*np0
-        alpha_0 = 10**(nb0/1e4-3.5)
-        R_max = py_0-(radt-radpx)
-        C_1 = (py_0**2+1.0)**0.5
-        y_max0=(C_1/alpha_0)**0.5
-        y_max=((C_1-(radt-radpx))/alpha_0)**0.5/2.0/np.pi
+        #py_0 = 1.00*np0
+        #alpha_0 = 10**(nb0/1e4-3.5)
+        #R_max = py_0-(radt-radpx)
+        #C_1 = (py_0**2+1.0)**0.5
+        #y_max0=(C_1/alpha_0)**0.5
+        #y_max=((C_1-(radt-radpx))/alpha_0)**0.5/2.0/np.pi
         
-        index=0
+        #index=0
         
         radn_x=(radn[index,1:]-radn[index,:-1])
         radt_x=(radt[index,1:]-radt[index,:-1])
@@ -115,8 +109,8 @@ for nb0 in grid_b0:
         plt.subplot(3,3,1)
         plt.scatter(x[index,:]/2/np.pi, y[index,:]/2/np.pi, c=R_dep[index,:], s=4, cmap='magma_r', edgecolors='None')
         #plt.scatter((t[index,:]-x[index,:])/2/np.pi, y_max, c=R_dep[index,:], s=1, cmap='rainbow', edgecolors='None')
-        plt.plot(x[index,:]/2/np.pi, y_max[index,:],'--k',linewidth=2.5,label=r'$Reduced\ w=1$')
-        plt.plot(x[index,:]/2/np.pi, -y_max[index,:],'--k',linewidth=2.5)
+        #plt.plot(x[index,:]/2/np.pi, y_max[index,:],'--k',linewidth=2.5,label=r'$Reduced\ w=1$')
+        #plt.plot(x[index,:]/2/np.pi, -y_max[index,:],'--k',linewidth=2.5)
         #plt.legend(loc='upper right')
         #plt.colorbar()
         #cbar=plt.colorbar(ticks=np.linspace(np.min(R_dep[index,:]), np.max(R_dep[index,:]), 5),shrink=1)
@@ -130,17 +124,18 @@ for nb0 in grid_b0:
         plt.xlabel(r'$x\ [\mu m]$',fontdict=font)
         plt.ylabel(r'$y\ [\mu m]$',fontdict=font)
         plt.xticks(fontsize=30); plt.yticks(fontsize=30);
-        plt.title(r'$electron\ for\ a_0=200,\ \alpha='+str(alpha_0)+',\  p_0='+str(int(np0))+'\ and\ simulation\ time\ 1000T_0$',fontdict=font)
+        plt.title(r'$electron\ for\ a_0=200,\ \alpha=0'+',\  p_0='+str(int(py[index,0]))+'\ and\ simulation\ time\ 1000T_0$',fontdict=font)
         
         arg_px = px[index,condition]
         arg_py = py[index,condition]
         radt_x=(radt[index,1:]-radt[index,:-1])
         arg_gg = radt_x[condition]
-        theta_x = np.zeros_like(arg_px)
+        #theta_x = np.zeros_like(arg_px)
         #print(arg_py/arg_px)
-        for i in range(np.size(theta_x)):
-            theta_x[index,i]=momentum_to_theta(arg_px[index,i],arg_py[index,i])
-        
+        #for i in range(np.size(theta_x)):
+        #    theta_x[index,i]=momentum_to_theta(arg_px[index,i],arg_py[index,i])
+        theta_x  = np.arctan2(arg_py,arg_px)
+               
         plt.subplot(3,3,2)
         plt.scatter(theta_x/np.pi*180, arg_gg, c=np.linspace(1,np.size(theta_x),np.size(theta_x))[np.newaxis,:], s=20, cmap='nipy_spectral', edgecolors='None')
         cbar=plt.colorbar(ticks=np.linspace(1, np.size(theta_x), 5), shrink=1)# orientation='horizontal', shrink=0.2)
@@ -156,8 +151,9 @@ for nb0 in grid_b0:
         theta_grid = np.linspace(-180.0, 180.0, 1001)
         theta_energy = np.zeros_like(theta_grid)
         theta_x/np.pi*180
+        print(np.size(theta_x/np.pi*180),np.shape(theta_x/np.pi*180))
         for i in range(np.size(theta_x/np.pi*180)):
-            theta_energy[np.min(np.where(theta_x[index,i]/np.pi*180 < theta_grid))]+=arg_gg[i]
+            theta_energy[np.min(np.where(theta_x[0,i]/np.pi*180 < theta_grid))]+=arg_gg[i]
         #print(theta_energy)
         plt.subplot(3,3,3)
         plt.plot(theta_grid, theta_energy, '-r', linewidth=3)
@@ -193,8 +189,8 @@ for nb0 in grid_b0:
         
         plt.scatter(x[index,:]/2/np.pi, y[index,:]/2/np.pi, c=eta[index,:], s=4, cmap='terrain', edgecolors='None')
         #plt.scatter((t[index,:]-x[index,:])/2/np.pi, y_max, c=R_dep[index,:], s=1, cmap='rainbow', edgecolors='None')
-        plt.plot(x[index,:]/2/np.pi, y_max[index,:],'--k',linewidth=2.5,label=r'$Reduced\ w=1$')
-        plt.plot(x[index,:]/2/np.pi, -y_max[index,:],'--k',linewidth=2.5)
+        #plt.plot(x[index,:]/2/np.pi, y_max[index,:],'--k',linewidth=2.5,label=r'$Reduced\ w=1$')
+        #plt.plot(x[index,:]/2/np.pi, -y_max[index,:],'--k',linewidth=2.5)
         #plt.legend(loc='upper right')
         #plt.colorbar()
         cbar=plt.colorbar(ticks=np.linspace(np.min(eta[index,:]), np.max(eta[index,:]), 5),shrink=1)
@@ -226,8 +222,8 @@ for nb0 in grid_b0:
         plt.subplot(3,3,7)
         plt.scatter((t[index,:]-x[index,:])/2/np.pi, y[index,:]/2/np.pi, c=R_dep[index,:], s=4, cmap='magma_r', edgecolors='None')
         #plt.scatter((t[index,:]-x[index,:])/2/np.pi, y_max, c=R_dep[index,:], s=1, cmap='rainbow', edgecolors='None')
-        plt.plot((t[index,:]-x[index,:])/2/np.pi, y_max[index,:],'--k',linewidth=2.5,label=r'$Reduced\ w=1$')
-        plt.plot((t[index,:]-x[index,:])/2/np.pi, -y_max[index,:],'--k',linewidth=2.5)
+        #plt.plot((t[index,:]-x[index,:])/2/np.pi, y_max[index,:],'--k',linewidth=2.5,label=r'$Reduced\ w=1$')
+        #plt.plot((t[index,:]-x[index,:])/2/np.pi, -y_max[index,:],'--k',linewidth=2.5)
         #plt.legend(loc='upper right')
         #plt.colorbar()
         cbar=plt.colorbar(ticks=np.linspace(np.min(R_dep[index,:]), np.max(R_dep[index,:]), 5),shrink=1)
@@ -278,6 +274,6 @@ for nb0 in grid_b0:
         fig = plt.gcf()
         #fig.set_size_inches(30, 15)
         fig.set_size_inches(35, 30)
-        fig.savefig(to_path+'b'+str(int(round(nb0)))+'p'+str(int(round(np0)))+'.png',format='png',dpi=160)
+        fig.savefig(to_path+'e_'+str(index).zfill(4)+'.png',format='png',dpi=160)
         plt.close("all")
         

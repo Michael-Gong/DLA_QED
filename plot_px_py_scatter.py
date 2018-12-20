@@ -40,17 +40,17 @@ font = {'family' : 'monospace',
 
 
 if __name__ == "__main__":
-  part_number = 12000
-  nsteps      = 101 #sum(1 for line in open(from_path+'x_0000.txt'))/part_number
+  part_number = 1200
+  nsteps      = 801 #sum(1 for line in open(from_path+'x_0000.txt'))/part_number
 
 
-  from_path = './Data_qe/'
-  to_path   = './jpg_qe/'
+  from_path = './Data_no_T400/'
+  to_path   = './jpg_no_T400/'
   t0  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   x0  = np.loadtxt(from_path+'x_tot_s.txt')/2/np.pi
   y0  = np.loadtxt(from_path+'y_tot_s.txt')/2/np.pi
-  px0 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
-  py0 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
+  px0 = np.loadtxt(from_path+'px_tot_s.txt')
+  py0 = np.loadtxt(from_path+'py_tot_s.txt')
   t0  = np.reshape(t0,(part_number,nsteps))
   x0  = np.reshape(x0,(part_number,nsteps))
   y0  = np.reshape(y0,(part_number,nsteps))
@@ -59,19 +59,19 @@ if __name__ == "__main__":
   gg0 = (px0**2+py0**2+1)**0.5
   ww0 = np.zeros_like(gg0)+1
 
-  for i in range(nsteps):
+  for i in range(0,nsteps,2):
 #      plt.subplot()
-      plt.scatter(x0[:,i], y0[:,i], c=gg0[:,i], norm=colors.Normalize(vmin=0,vmax=2e3), s=10, cmap='rainbow', edgecolors='None', alpha=0.66)
+      plt.scatter(px0[:,i], py0[:,i], c=gg0[:,i], norm=colors.Normalize(vmin=0,vmax=2e3), s=10, cmap='rainbow', edgecolors='None', alpha=0.66)
       cbar=plt.colorbar( ticks=np.linspace(0, 2000, 5) ,pad=0.005)
       cbar.ax.set_yticklabels(cbar.ax.get_yticklabels(), fontsize=20)
       cbar.set_label('$\gamma$',fontdict=font)
 
 #plt.plot(np.linspace(-500,900,1001), 200-np.linspace(-500,900,1001),'-',color='grey',linewidth=3)
  #   plt.legend(loc='upper right')
-      plt.xlim(0,1000)
-      plt.ylim(-12,12)
-      plt.xlabel('X [$\mu m$]',fontdict=font)
-      plt.ylabel('Y [$\mu m$]',fontdict=font)
+      plt.xlim(-100,15000)
+      plt.ylim(-500,500)
+      plt.xlabel('$P_x$ [$m_ec$]',fontdict=font)
+      plt.ylabel('$P_y$ [$m_ec$]',fontdict=font)
       plt.xticks(fontsize=20); plt.yticks(fontsize=20);
       plt.title('t='+str(round(t0[0,i],0))+' $T_0$',fontdict=font)
       #plt.text(-100,650,' t = 400 fs',fontdict=font)
@@ -82,7 +82,7 @@ if __name__ == "__main__":
       #lt.figure(figsize=(100,100))
       fig = plt.gcf()
       fig.set_size_inches(12, 6.5)
-      fig.savefig(to_path+'e_scatter_'+str(i).zfill(4)+'.png',format='png',dpi=80)
+      fig.savefig(to_path+'p_scatter_'+str(i).zfill(4)+'.png',format='png',dpi=80)
       plt.close("all")
 
       print('plotting '+str(i).zfill(4))
