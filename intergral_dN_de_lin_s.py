@@ -61,8 +61,8 @@ if __name__ == "__main__":
   t0  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   #x0  = np.loadtxt(from_path+'x_tot_s.txt')/2/np.pi
   #y0  = np.loadtxt(from_path+'y_tot_s.txt')/2/np.pi
-  px0 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
-  py0 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
+  px0 = np.loadtxt(from_path+'px_tot_s.txt')
+  py0 = np.loadtxt(from_path+'py_tot_s.txt')
   t0  = np.reshape(t0,(part_number,nsteps))
   #x0  = np.reshape(x0,(part_number,nsteps))
   #y0  = np.reshape(y0,(part_number,nsteps))
@@ -77,8 +77,8 @@ if __name__ == "__main__":
   t1  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   #x1  = np.loadtxt(from_path+'x_tot_s.txt')/2/np.pi
   #y1  = np.loadtxt(from_path+'y_tot_s.txt')/2/np.pi
-  px1 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
-  py1 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
+  px1 = np.loadtxt(from_path+'px_tot_s.txt')
+  py1 = np.loadtxt(from_path+'py_tot_s.txt')
   t1  = np.reshape(t1,(part_number,nsteps))
   #x1  = np.reshape(x1,(part_number,nsteps))
   #y1  = np.reshape(y1,(part_number,nsteps))
@@ -93,8 +93,8 @@ if __name__ == "__main__":
   t2  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   #x2  = np.loadtxt(from_path+'x_tot_s.txt')/2/np.pi
   #y2  = np.loadtxt(from_path+'y_tot_s.txt')/2/np.pi
-  px2 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
-  py2 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
+  px2 = np.loadtxt(from_path+'px_tot_s.txt')
+  py2 = np.loadtxt(from_path+'py_tot_s.txt')
   t2  = np.reshape(t2,(part_number,nsteps))
   #x2  = np.reshape(x1,(part_number,nsteps))
   #y2  = np.reshape(y1,(part_number,nsteps))

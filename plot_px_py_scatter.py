@@ -41,7 +41,7 @@ font = {'family' : 'monospace',
 
 if __name__ == "__main__":
   part_number = 1200
-  nsteps      = 801 #sum(1 for line in open(from_path+'x_0000.txt'))/part_number
+  nsteps      = 8001 #sum(1 for line in open(from_path+'x_0000.txt'))/part_number
 
 
   from_path = './Data_no_T400/'
@@ -49,8 +49,8 @@ if __name__ == "__main__":
   t0  = np.loadtxt(from_path+'t_tot_s.txt')/2/np.pi
   x0  = np.loadtxt(from_path+'x_tot_s.txt')/2/np.pi
   y0  = np.loadtxt(from_path+'y_tot_s.txt')/2/np.pi
-  px0 = np.loadtxt(from_path+'px_tot_s.txt')
-  py0 = np.loadtxt(from_path+'py_tot_s.txt')
+  px0 = np.loadtxt(from_path+'px_tot_s.txt')/2/np.pi
+  py0 = np.loadtxt(from_path+'py_tot_s.txt')/2/np.pi
   t0  = np.reshape(t0,(part_number,nsteps))
   x0  = np.reshape(x0,(part_number,nsteps))
   y0  = np.reshape(y0,(part_number,nsteps))
@@ -68,8 +68,8 @@ if __name__ == "__main__":
 
 #plt.plot(np.linspace(-500,900,1001), 200-np.linspace(-500,900,1001),'-',color='grey',linewidth=3)
  #   plt.legend(loc='upper right')
-      plt.xlim(-100,15000)
-      plt.ylim(-500,500)
+      plt.xlim(-100,3100)
+      plt.ylim(-250,250)
       plt.xlabel('$P_x$ [$m_ec$]',fontdict=font)
       plt.ylabel('$P_y$ [$m_ec$]',fontdict=font)
       plt.xticks(fontsize=20); plt.yticks(fontsize=20);
